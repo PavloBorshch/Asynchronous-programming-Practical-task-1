@@ -3,6 +3,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
 public class Main {
+    // ANSI escape codes для кольорів
+    public static final String RESET = "\u001B[0m";  // скидання кольору
+    public static final String RED = "\u001B[31m";   // червоний колір
+    public static final String GREEN = "\u001B[32m"; // зелений колір
+    public static final String YELLOW = "\u001B[33m"; // жовтий колір
+
     public static void main(String[] args) {
         Warehouse.openWarehouse();  // Відкриваємо склад
 
@@ -44,6 +50,6 @@ public class Main {
             System.err.println("Помилка при завершенні постачальника.");
         }
 
-        System.out.println("===== Програма завершена =====");
+        System.out.println(RED + "===== Програма завершена =====" + RESET);
     }
 }

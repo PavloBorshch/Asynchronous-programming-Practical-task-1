@@ -13,10 +13,10 @@ public class Customer implements Runnable {
     public void run() {
         synchronized (Warehouse.lock) {
             if (Warehouse.isClosed()) {
-                System.out.println("Покупець " + customerId + " прийшов і дізнався, що склад закрито. Іде додому.");
+                System.out.println(Main.RED + "Покупець " + customerId + " прийшов і дізнався, що склад закрито. Іде додому." + Main.RESET);
                 return;
             }
-            System.out.println("Покупець " + customerId + " прийшов на склад і чекає своєї черги.");
+            System.out.println(Main.YELLOW + "Покупець " + customerId + " прийшов на склад і чекає своєї черги." + Main.RESET);
             Warehouse.addToQueue(this);  // Додаємо до черги покупців
         }
 
@@ -28,10 +28,10 @@ public class Customer implements Runnable {
     }
 
     public void receiveProduct() {
-        System.out.println("Покупець " + customerId + " отримав товар.");
+        System.out.println(Main.GREEN + "Покупець " + customerId + " отримав товар." + Main.RESET);
     }
 
     public void leaveWithoutProduct() {
-        System.out.println("Покупець " + customerId + " не отримав товар і йде додому.");
+        System.out.println(Main.RED + "Покупець " + customerId + " не отримав товар і йде додому." + Main.RESET);
     }
 }

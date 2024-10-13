@@ -1,7 +1,7 @@
 import java.util.concurrent.Semaphore;
 
 public class Supplier implements Runnable {
-    private Semaphore semaphore;
+    private final Semaphore semaphore;
     private boolean warehouseClosed;
 
     public Supplier(Semaphore semaphore) {
@@ -20,24 +20,24 @@ public class Supplier implements Runnable {
                 Thread.sleep((int) (Math.random() * 3000)); // Імітація доставки товару
 
                 synchronized (Warehouse.lock) {
-                    if (Warehouse.isClosed()) {
-                        System.out.println("Склад закрито. Постачальник припиняє доставку товару.");
-                        break;
-                    }
-
                     if (semaphore.availablePermits() < Warehouse.MAX_ITEMS) {
                         semaphore.release();
-                        System.out.println("Постачальник доставив товар на склад. Зараз на складі: "
-                                + semaphore.availablePermits() + " товарів.");
+                        System.out.println(Main.GREEN + "Постачальник доставив товар на склад. Зараз на складі: "
+                                + semaphore.availablePermits() + " товарів." + Main.RESET);
                     } else {
-                        System.out.println("Склад заповнений. Постачальник чекає.");
+                        System.out.println(Main.YELLOW + "Склад заповнений. Постачальник чекає." + Main.RESET);
+                    }
+
+                    if (Warehouse.isClosed()) {
+                        System.out.println(Main.RED + "Склад закрито. Постачальник припиняє доставку товару." + Main.RESET);
+                        break;
                     }
                 }
             }
         } catch (InterruptedException e) {
             System.err.println("Постачальника було перервано.");
         } finally {
-            System.out.println("===== Постачальник пішов додому =====");
+            System.out.println(Main.RED + "===== Постачальник пішов додому =====" + Main.RESET);
         }
     }
 }

@@ -14,14 +14,14 @@ public class Warehouse {
     }
 
     public static void openWarehouse() {
-        System.out.println("===== Склад відкрито =====");
+        System.out.println(Main.RED + "===== Склад відкрито =====" + Main.RESET);
     }
 
     public static void closeWarehouse() {
         synchronized (lock) {
             if (!isClosed) {
                 isClosed = true;
-                System.out.println("===== Склад закрито =====");
+                System.out.println(Main.RED + "===== Склад закрито =====" + Main.RESET);
                 processRemainingCustomers();  // Обробка покупців після закриття
             }
         }
